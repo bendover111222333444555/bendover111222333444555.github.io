@@ -2,14 +2,14 @@ function searchgames() {
     var input = document.getElementById('searchBar');
     var filter = input.value.toUpperCase();
     var games = document.getElementsByClassName('game-link');
-    var i, txtValue;
-
-    for (i = 0; i < games.length; i++) {
-        txtValue = games[i].textContent || games[i].innerText;
+    
+    for (var i = 0; i < games.length; i++) {
+        var txtValue = games[i].textContent || games[i].innerText;
+        var parentLink = games[i].parentElement; // the <a> tag
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            games[i].style.display = "";
+            parentLink.style.display = "";
         } else {
-            games[i].style.display = "none";
+            parentLink.style.display = "none";
         }
     }
 }
