@@ -6,6 +6,8 @@
     --link-color: #66b3ff;
     --game-link-bg: #2a2a2a;
     --game-link-hover: #4a4a4a;
+    --popup-color: #000000;
+    --popup-text-color:#FF0000
 }
 
 body {
@@ -229,6 +231,20 @@ body.dark-mode {
     text-align: center;
     font-size: 100%;
     text-align: start;
+}
+
+#popupWarning{
+    background-color: var(--popup-color);
+    color: var(--popup-text-color);
+    border: 3px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1000%;
+    text-align: start;
+    position: relative;
+    display: none;
 }
 
 .clicks {

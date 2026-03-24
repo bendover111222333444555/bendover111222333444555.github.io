@@ -8,7 +8,10 @@ if (window !== window.top || (buttonEnabled && !isMainTab)) {
 function checkPopups() {
     var popup = window.open("", "_blank", "width=1,height=1");
     if (!popup || popup.closed || typeof popup.closed == "undefined") {
-        alert("TURN ON POPUPS ON THE RIGHT");
+        document.getElementById("popupWarning").style.display = ""
+        setTimeout(() => {
+            document.getElementById("popupWarning").style.display = "none"
+        }, 1000);
         return false;
     }
     setTimeout(function() { popup.close(); }, 500);
@@ -52,61 +55,56 @@ function setupPopup(popup, cloakedUrl, cloakUrl, isMain) {
     favLink.href = "https://www.google.com/s2/favicons?domain=" + cloakUrl + "&sz=64";
     popup.document.head.appendChild(favLink);
 
-    fetch("https://api.allorigins.win/get?url=https://" + cloakUrl)
-        .then(r => r.json())
-        .then(data => {
-            var match = data.contents.match(/<title>(.*?)<\/title>/i);
-            if (match) {
-                var raw = match[1].split("-")[0].split("|")[0].trim();
-                raw = raw.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "");
-                popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
-            } else {
+    if (isMain) {
+        fetch("https://api.allorigins.win/get?url=https://" + cloakUrl)
+            .then(r => r.json())
+            .then(data => {
+                var match = data.contents.match(/<title>(.*?)<\/title>/i);
+                if (match) {
+                    var raw = match[1].split("-")[0].split("|")[0].trim();
+                    raw = raw.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "");
+                    popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
+                } else {
+                    var raw = cloakUrl.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "").split(".")[0];
+                    popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
+                }
+            })
+            .catch(function() {
                 var raw = cloakUrl.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "").split(".")[0];
                 popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
-            }
-        })
-        .catch(function() {
-            var raw = cloakUrl.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "").split(".")[0];
-            popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
-        });
+            });
+    } else {
+        var raw = cloakUrl.replace(/^(www\.|http:\/\/|https:\/\/)/gi, "").split(".")[0];
+        popup.document.title = raw.charAt(0).toUpperCase() + raw.slice(1);
+    }
 
     var iframe = popup.document.createElement("iframe");
     iframe.src = cloakedUrl;
     iframe.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;border:none;";
     popup.document.body.appendChild(iframe);
-    
-    if (isMain == true) {
+
+    if (isMain) {
         var blankerDiv = popup.document.createElement("div");
         blankerDiv.id = "blanker";
         blankerDiv.style.cssText = "position:fixed;top:60px;left:20px;z-index:99999;";
 
-        var blankerInput = popup.document.createElement("input");
-        blankerInput.type = "text";
-        blankerInput.display = "none";
-        blankerInput.id = "blankerSearch";
-        blankerInput.placeholder = "onedrive.live.com";
-        blankerInput.value = cloakUrl !== "onedrive.live.com" ? cloakUrl : "";
-
         var blankerBtn = popup.document.createElement("button");
         blankerBtn.id = "blankerBtn";
         blankerBtn.textContent = "Blanker On";
+        blankerBtn.style.position = "relative";
         blankerBtn.style.overflow = "hidden";
 
         var blankerLink = popup.document.createElement("a");
         blankerLink.href = "https://bendover111222333444.onrender.com";
         blankerLink.target = "_blank";
         blankerLink.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;display:block;z-index:9999;";
-
-        blankerBtn.style.position = "relative";
         blankerBtn.appendChild(blankerLink);
 
         blankerDiv.appendChild(blankerBtn);
         popup.document.body.appendChild(blankerDiv);
-        
+
         setTimeout(function() { window.close(); }, 300);
-
     }
-
 }
 
 document.addEventListener("DOMContentLoaded", function() {
