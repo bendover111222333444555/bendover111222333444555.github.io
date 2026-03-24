@@ -8,10 +8,11 @@ if (window !== window.top || (buttonEnabled && !isMainTab)) {
 function checkPopups() {
     var popup = window.open("", "_blank", "width=1,height=1");
     if (!popup || popup.closed || typeof popup.closed == "undefined") {
-        document.getElementById("popupWarning").style.display = ""
+        document.getElementById("popupWarning").style.display = "";
         setTimeout(() => {
-            document.getElementById("popupWarning").style.display = "none"
+            document.getElementById("popupWarning").style.display = "none";
         }, 1000);
+        console.log("USE POPUPS");
         return false;
     }
     setTimeout(function() { popup.close(); }, 500);
