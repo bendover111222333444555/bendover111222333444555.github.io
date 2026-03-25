@@ -1,4 +1,4 @@
-var buttonEnabled = getCookie("buttonEnabled")
+var buttonEnabled = window.opener ? window.opener.buttonEnabled : false;
 
 function openPopupCloaked(url, cloakedUrl) {
 
@@ -10,16 +10,20 @@ function openPopupCloaked(url, cloakedUrl) {
         popup.document.title = "New Tab";
         popup.document.body.style.margin = "0";
         popup.document.body.appendChild(iframe);
-        
+        popup.buttonEnabled = buttonEnabled;
+
         const userAgent = navigator.userAgent;
         let browserImg = "/images/newtab.png";
         
         if (userAgent.match(/edg/i)) {
-            browserName = "/images/newtab-edge.png";
+            browserImg = "/images/newtab-edge.png";
         }
 
-        const favicon = popup.document.getElementById("favicon")
-        favicon.href = browserImg
+        popup.onload = function() {
+            const favicon = popup.document.getElementById("favicon");
+            if (favicon) favicon.href = browserImg;
+            popup.document.title = "New Tab";
+        };
 
         setTimeout(() => window.close(), 500);
     }
@@ -45,13 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
             buttonEnabled = false;
             button.style.color = falseColor;
             button.textContent = "Blanker Off";
-            setCookie("buttonEnabled", false)
             openPopupCloaked("https://bendover111222333444.onrender.com", "https://bendover111222333444.onrender.com")
         } else {
             buttonEnabled = true;
             button.style.color = trueColor;
             button.textContent = "Blanker On";
-            setCookie("buttonEnabled", true)
             openPopupCloaked("https://bendover111222333444.onrender.com", "about:blank");
         }
     });
