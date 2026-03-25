@@ -5,27 +5,6 @@ if (window !== window.top || (buttonEnabled && !isMainTab)) {
     document.getElementById("blanker").style.display = "none";
 }
 
-function checkPopups() {
-    const popup = window.open("", "", "width=100,height=100");
-
-    const blocked = !popup || popup.closed || typeof popup.closed === "undefined";
-
-    if (blocked) {
-        const warningEl = document.getElementById("popupWarning");
-        if (warningEl) {
-            warningEl.style.display = "block";
-            setTimeout(() => {
-                warningEl.style.display = "none";
-            }, 3000);
-        }
-        return false;
-    } else {
-        popup.close();
-        return true;
-    }
-}
-
-
 function getCloakUrl() {
     var input = document.getElementById("blankerSearch");
     var val = input && input.value.trim();
@@ -135,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
             buttonEnabled = false;
             button.style.color = falseColor;
             button.textContent = "Blanker Off";
-        } else if (checkPopups()) {
+        } else if {
             buttonEnabled = true;
             button.style.color = trueColor;
             button.textContent = "Blanker On";
