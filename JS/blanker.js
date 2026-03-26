@@ -1,6 +1,8 @@
-var buttonEnabled = new URLSearchParams(window.location.search).get("blanker") === "true";
+var params = new URLSearchParams(window.location.search);
+var buttonEnabled = params.get("blanker") === "true";
+var isMainTab = params.get("main") === "true";
 
-if (window !== window.top) {
+if (window !== window.top && !isMainTab) {
     document.getElementById("blanker").style.display = "none";
 }
 
@@ -50,12 +52,12 @@ document.addEventListener("DOMContentLoaded", function() {
             buttonEnabled = false;
             button.style.color = falseColor;
             button.textContent = "Blanker Off";
-            openPopupCloaked(window.location.href.split("?")[0] + "?blanker=false", "about:blank");
+            openPopupCloaked(window.location.href.split("?")[0] + "?blanker=false&main=true", "about:blank");
         } else {
             buttonEnabled = true;
             button.style.color = trueColor;
             button.textContent = "Blanker On";
-            openPopupCloaked(window.location.href.split("?")[0] + "?blanker=true", "about:blank");
+            openPopupCloaked(window.location.href.split("?")[0] + "?blanker=true&main=true", "about:blank");
         }
     });
 
