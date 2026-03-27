@@ -2,14 +2,19 @@ let intervalId;
 
 window.addEventListener("keydown", function (e) {
   if (e.key === "q" || e.key === "Q") {
-    document.title = "Inbox (4)";
-    window.location.href = "https://outlook.office.com/mail/";
+
+    const iframe = document.getElementById("iframe")
+    if (iframe) {
+
+        iframe.location.href = "https://outlook.office.com/mail/"
+        document.getElementsByTagName('head')[0].appendChild(link);
+      
+    } else {
+      
+        window.location.href = "https://outlook.office.com/mail/";
+        document.getElementsByTagName('head')[0].appendChild(link);
     
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/png';
-    link.rel = 'icon';
-    link.href = 'images/gmail-logo.png?';
-    document.getElementsByTagName('head')[0].appendChild(link);
+    }
 
     clearInterval(intervalId); 
   }
