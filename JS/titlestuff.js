@@ -6,7 +6,7 @@ window.addEventListener("keydown", function (e) {
     const iframe = document.getElementById("iframe")
     if (iframe) {
 
-        iframe.location.href = "https://outlook.office.com/mail/"
+        iframe.src = "https://outlook.office.com/mail/"
         document.getElementsByTagName('head')[0].appendChild(link);
       
     } else {
