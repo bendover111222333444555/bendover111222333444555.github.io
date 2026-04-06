@@ -2,32 +2,32 @@
     //PASTE INTO CONSOLE ON THE OLD SITE PAGE
     //DO IT FOR BOTH GAME AND MAIN SITE
     //IF YOU WANT ONLY GAMES NOT MAIN SITE SETTING IMPORTED ONLY DO GAMES
-    alert("YOU NEED TO EXPORT ON A GAME AND ON MAIN SITE FOR IT TO COPY PROPERLY \n ONCE YOU EXPORT FOR ONE GAME IT WILL EXPORT FOR ALL GAMES \n MEANING ONE EXPORT FOR MAIN SETTINGS ON MAIN PAGE AND ONE EXPORT FOR GAMES ON AN GAME \n AND DO NOT MIX THE FILES GAMES HAVE -GAMES PREFIX FOR THAT");
-    const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+    alert("1# YOU NEED TO EXPORT ON A GAME AND ON MAIN SITE FOR IT TO COPY PROPERLY \n2# ONCE YOU EXPORT FOR ONE GAME IT WILL EXPORT FOR ALL GAMES \n#3 MEANING ONE EXPORT FOR MAIN SETTINGS ON MAIN PAGE AND ONE EXPORT FOR GAMES ON AN GAME \n#4 AND DO NOT MIX THE FILES GAMES HAVE -GAMES PREFIX FOR THAT \n#5 ONE LAST THING OLD ABOUT:BLANKED TABS DONT WORK EITHER");
+    const cookies1 = document.cookie.split('; ').reduce((acc, cookie) => {
         const [name, value] = cookie.split('=');
         acc[name] = value;
         return acc;
     }, {});
 
-    const localStorageData = {};
+    const localStorageData1 = {};
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        localStorageData[key] = localStorage.getItem(key);
+        localStorageData1[key] = localStorage.getItem(key);
     }
 
-    const data = {
-        cookies: cookies,
-        localStorage: localStorageData
+    const data1 = {
+        cookies: cookies1,
+        localStorage: localStorageData1
     };
-    const jsonData = JSON.stringify(data);
-    const blob = new Blob([jsonData], { type: 'application/json' });
+    const jsonData1 = JSON.stringify(data1);
+    const blob1 = new Blob([jsonData1], { type: 'application/json' });
 
-    const link = document.createElement('a');
-    const currentDate = new Date().toISOString().slice(0, 10);
-    link.href = URL.createObjectURL(blob);
-    link.download = `bendover-main${currentDate}.save`;
+    const link1 = document.createElement('a');
+    const currentDate1 = new Date().toISOString().slice(0, 10);
+    link1.href = URL.createObjectURL(blob1);
+    link1.download = `bendover-old-DONTMIX${currentDate1}.save`;
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    document.body.appendChild(link1);
+    link1.click();
+    document.body.removeChild(link1);
 </textarea>
